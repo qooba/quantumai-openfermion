@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: quantumai
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: openfermion
+  namespace: quantumai
+spec:
+  template:
+    spec:
+      containers:
+      - name: openfermion
+        image: qooba/quantumai:openfermion
+        command: ["quantum.sh",  "https://raw.githubusercontent.com/qooba/quantumai-openfermion/main/notebooks/openfermionpyscf_graphene.ipynb", "gs://quantumai-openfermion/output_openfermionpyscf_graphene.ipynb"]
+      restartPolicy: Never
+  backoffLimit: 1
